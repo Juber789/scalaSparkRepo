@@ -15,8 +15,8 @@ object secondClass {
     // read data from csv file.
     val dataPath = "E:\\BigData\\datasets\\us-500.csv"
     val dataFrame = spark.read.format("csv").option("header","true").option("inferSchema","true").load(dataPath)
-    dataFrame.printSchema()
-    dataFrame.show(5,false)
+//    dataFrame.printSchema()
+//    dataFrame.show(5,false)
 
     /*//run sql quries on top of dataFrame.
     val result = dataFrame.where($"state"==="NJ" && $"email".like("%gmail.com"))
@@ -26,9 +26,19 @@ object secondClass {
 
     dataFrame.createOrReplaceTempView("usTab")
     val result = spark.sql("select * from usTab where state='NJ' and email like '%gmail.com'")
-    result.show(false)
+//    result.show(false)
     val stateCountRes = spark.sql("select state,count(*) as cont from usTab where state='NJ' group by state")
-    stateCountRes.show(false)
+//    stateCountRes.show(false)
+
+    // fetch list of columns from table.
+    val list = List("first_name","address","county")
+    val newColDataFrame = dataFrame.select(list.map(col): _*)
+    newColDataFrame.show(6,false)
+
+    //renaming columns
+    val newCols = Map("first_name" -> "first_name_agent", "address" -> "address_agent", "state" -> "state_agent","zip" -> "zip_Agent")
+    val aliasColumsDataFrame = dataFrame.select(newCols.map(x=>col(x._1).alias(x._2)).toList :_*)
+    aliasColumsDataFrame.show(8,false)
 
     spark.stop()
   }
