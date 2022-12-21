@@ -1,2 +1,4 @@
 # scalaSparkRepo
-Scala Spark project
+Description: Scala_Spark_project
+
+firstTask:  SPARK DATAFRAME INTRO
