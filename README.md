@@ -1,0 +1,2 @@
+# scalaSparkRepo
+Scala Spark project
